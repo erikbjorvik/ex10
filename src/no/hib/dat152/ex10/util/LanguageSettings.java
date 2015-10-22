@@ -8,6 +8,15 @@ import javax.servlet.http.HttpServletResponse;
 
 public class LanguageSettings {
 	
+	/**
+	 * Returnerer Localeobjekt. Dersom language og country er satt i cookie vil dette bli brukt.
+	 * Ellers brukes HTTP-Accept-Language. Om ikke denne er satt vil det som er satt som standard
+	 * på serveren bli brukt. 
+	 * 
+	 * @param request HttpServletRequest objekt
+	 * @param response HttpServletResponse objekt
+	 * @return Locale objekt
+	 */
 	public static Locale getLocale(HttpServletRequest request, HttpServletResponse response) {
 		Cookie[] cookies = request.getCookies();
 		
@@ -44,5 +53,17 @@ public class LanguageSettings {
 		}
 		
 	}//getLocale
+	
+	/**
+	 * Setter language og country cookiene.
+	 * 
+	 * @param lang Language som String på ISO 639 format
+	 * @param country Country som String på ISO 3166 format
+	 * @param response HttpServletResponse objekt
+	 */
+	public static void setLangCookie(String lang, String country, HttpServletResponse response) {
+		response.addCookie(new Cookie("_language", lang));
+		response.addCookie(new Cookie("_country", country));
+	}
 	
 }
