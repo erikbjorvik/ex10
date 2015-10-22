@@ -1,4 +1,4 @@
-package no.hib.dat152.ex10.database;
+package no.hib.dat152.ex10.model;
 
 public class Description extends Product {
 	

@@ -1,4 +1,4 @@
-package no.hib.dat152.ex10.database;
+package no.hib.dat152.ex10.model;
 
 public class Product {
 	private int pno;
@@ -45,6 +45,7 @@ public class Product {
 	public void setImageFile(String imageFile) {
 		this.imageFile = imageFile;
 	}
+	
 	
 	
 }
