@@ -7,8 +7,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import no.hib.dat152.ex10.model.Description;
-import no.hib.dat152.ex10.model.ProductDAO;
 import no.hib.dat152.ex10.util.LanguageSettings;
 
 /**
