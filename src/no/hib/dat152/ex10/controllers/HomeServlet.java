@@ -31,9 +31,11 @@ public class HomeServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		ResourceBundle langTxt = ResourceBundle.getBundle("lang", LanguageSettings.getLocale(request, response));
-		request.setAttribute("velkommen", langTxt.getString("forside_vlkm"));
+		//ResourceBundle langTxt = ResourceBundle.getBundle("lang", );
+	
+		request.setAttribute("language", LanguageSettings.getLocale(request, response).getLanguage());
 		request.getRequestDispatcher("home.jsp").forward(request, response);
+		
 	}
 
 	/**
