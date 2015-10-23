@@ -5,13 +5,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Home</title>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 </head>
 <body>
 <a href="SetLanguage?SetLang=nb-NO">Norsk</a> 
 <a href="SetLanguage?SetLang=en-US">English</a> 
 <a href="SetLanguage?SetLang=es-ES">Espanol</a> 
 
-<c:out value="${requestScope.velkommen}" />
+<p>
+<c:out value="${velkommen}" />
+</p>
 
 </body>
 </html>
