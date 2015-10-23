@@ -34,8 +34,10 @@ public class ProductsServlet extends HttpServlet {
 		//Description d1 = pDao.getDescriptionByPno(1);
 		//response.getWriter().append(d1.getpName() +" "+ d1.getLangCode() ).append(request.getContextPath());
 		
-		response.getWriter().append("Ditt språk: " + LanguageSettings.getLocale(request, response).getLanguage());
-		response.getWriter().append("Ditt land: " + LanguageSettings.getLocale(request, response).getCountry());
+		//response.getWriter().append("Ditt språk: " + LanguageSettings.getLocale(request, response).getLanguage());
+		//response.getWriter().append("Ditt land: " + LanguageSettings.getLocale(request, response).getCountry());
+		
+		request.getRequestDispatcher("products.jsp").forward(request, response);
 	}
 
 	/**
