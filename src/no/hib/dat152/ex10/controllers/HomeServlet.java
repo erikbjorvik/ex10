@@ -1,11 +1,15 @@
 package no.hib.dat152.ex10.controllers;
 
 import java.io.IOException;
+import java.util.ResourceBundle;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import no.hib.dat152.ex10.util.LanguageSettings;
+
 
 /**
  * Servlet implementation class HomeServlet
@@ -27,6 +31,8 @@ public class HomeServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		ResourceBundle langTxt = ResourceBundle.getBundle("lang", LanguageSettings.getLocale(request, response));
+		request.setAttribute("velkommen", langTxt.getString("forside_vlkm"));
 		request.getRequestDispatcher("home.jsp").forward(request, response);
 	}
 
