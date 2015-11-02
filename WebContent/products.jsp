@@ -11,14 +11,40 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Products</title>
+<title><fmt:message key="hjem" /></title>
 </head>
 <body>
 <jsp:include page="spraakValg.jsp" />
-<table border="1">
-<c:out value="${produkter['1']}" />
 
-
+<table border="0">
+	<c:forEach items="${produkter}" var="produkt">
+		<tr>
+			<td>
+				<h1><c:out value="${produkt.navn}" /></h1>
+			</td>
+		</tr>
+		
+		<tr>
+			<td>
+				<img src="images/<c:out value="${produkt.bilde}" />" alt="BILDE: <c:out value="${produkt.navn}" />" height="200px" />
+			</td>
+			
+			<td>
+				<fmt:message key="navn" />: <c:out value="${produkt.navn}" /><br />
+				<fmt:message key="pris" />: <c:out value="${produkt.prisEuro}" />
+				<p><fmt:message key="beskrivelse" />: <c:out value="${produkt.beskrivelse}" /></p>
+				
+				<form method="POST" action="Kurv">
+					<input type="hidden" name="produkt" value="${produkt.nummer}" />
+					<input type="submit" value="<fmt:message key="handlevogn" />" />
+				</form>
+			</td>
+		</tr>	
+	
+	</c:forEach>
 </table>
+
+<jsp:include page="meny.jsp" />
+
 </body>
 </html>

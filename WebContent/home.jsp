@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<c:set var="language" value="${language}" />
 <fmt:setLocale value="${language}" />
 <fmt:setBundle basename="lang"  />
 
@@ -12,7 +11,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Home</title>
+<title><fmt:message key="hjem" /></title>
 
 </head>
 <body>
@@ -20,10 +19,9 @@
 
 <h1>Kaffekopper AS</h1>
 <img src="images/coffee.png" alt="Kaffekopper AS" />
-<p>
-<fmt:message key="forside_vlkm" />
-</p>
+<p><fmt:message key="forside_vlkm" /></p>
 
+<jsp:include page="meny.jsp" />
 
 </body>
 </html>
