@@ -1,7 +1,6 @@
 package no.hib.dat152.ex10.controllers;
 
 import java.io.IOException;
-import java.util.ResourceBundle;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

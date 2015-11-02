@@ -1,12 +1,14 @@
 package no.hib.dat152.ex10.controllers;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import no.hib.dat152.ex10.model.ProductDAO;
 import no.hib.dat152.ex10.util.LanguageSettings;
 
 /**
@@ -29,21 +31,16 @@ public class ProductsServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		String lang = LanguageSettings.getLocale(request, response).getLanguage();
+		ProductDAO pDAO = new ProductDAO(lang);
 		
-		//ProductDAO pDao = new ProductDAO();
-		//Description d1 = pDao.getDescriptionByPno(1);
-		//response.getWriter().append(d1.getpName() +" "+ d1.getLangCode() ).append(request.getContextPath());
+		System.out.println(pDAO.getMap().get(1).getLangCode());
 		
-		response.getWriter().append("Ditt språk: " + LanguageSettings.getLocale(request, response).getLanguage());
-		response.getWriter().append("Ditt land: " + LanguageSettings.getLocale(request, response).getCountry());
+		request.setAttribute("lang", lang);
+		request.setAttribute("produkter", pDAO.getMap());
+		request.getRequestDispatcher("products.jsp").forward(request, response);
+		
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
 
 }

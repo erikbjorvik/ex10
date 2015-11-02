@@ -7,15 +7,14 @@ public class ProductDAO {
 	private HashMap<Integer, Description> produktListe_no;
 	private HashMap<Integer, Description> produktListe_en;
 	private HashMap<Integer, Description> produktListe_es;
-	private String language = "no"; //Setter no som standard språk
+	
+	private HashMap<Integer,Description> gjeldende; 
 	
 	
 	/**
 	 * Konstruktør som oppretter DAO-objekt med dummydata.
 	 */
 	public ProductDAO(String lang) {
-		
-		this.language = lang;
 		
 		//HashMapene representerer tabeller. En for hvert språk.
 		produktListe_no = new HashMap<Integer, Description>();
@@ -49,15 +48,30 @@ public class ProductDAO {
 		Description es3 = new Description(3, "copa amarillo", 8.5, "", "es", "buena taza!");
 		this.produktListe_es.put(3, es3);
 		
+		//Setter gjeldende.
+		switch (lang) {
+		case "no":
+			this.gjeldende = this.produktListe_no;
+			break;
+		case "en":
+			this.gjeldende = this.produktListe_en;
+			break;
+		case "es":
+			this.gjeldende = this.produktListe_es;
+			break;
+		default:
+			this.gjeldende = this.produktListe_no;
+			break;
+		}
+		
 	}
 	
 	public Description getDescriptionByPno(Integer pno) {
-		
-		switch (this.language) {
-		
-		}
-		
-		return this.produktListe.get(pno);
+		return this.gjeldende.get(pno);
+	}
+	
+	public HashMap<Integer,Description> getMap() {
+		return this.gjeldende;
 	}
 
 }

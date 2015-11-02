@@ -5,25 +5,20 @@
 
 <c:set var="language" value="${language}" />
 <fmt:setLocale value="${language}" />
-<fmt:setBundle basename="lang"  />
-
+<fmt:setBundle basename="lang" />
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Home</title>
-
+<title>Products</title>
 </head>
 <body>
 <jsp:include page="spraakValg.jsp" />
-
-<h1>Kaffekopper AS</h1>
-<img src="images/coffee.png" alt="Kaffekopper AS" />
-<p>
-<fmt:message key="forside_vlkm" />
-</p>
+<table border="1">
+<c:out value="${produkter['1']}" />
 
 
+</table>
 </body>
 </html>
