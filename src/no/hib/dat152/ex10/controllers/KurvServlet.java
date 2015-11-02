@@ -1,6 +1,7 @@
 package no.hib.dat152.ex10.controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.ServletException;
@@ -9,6 +10,10 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import no.hib.dat152.ex10.model.Description;
+import no.hib.dat152.ex10.model.ProductDAO;
+import no.hib.dat152.ex10.util.LanguageSettings;
 
 @WebServlet("/Kurv")
 public class KurvServlet extends HttpServlet {
@@ -24,41 +29,65 @@ public class KurvServlet extends HttpServlet {
 		String handlekurv = "";
 		
 		//Ser etter handlekurv cookien
-		for(Cookie cookie : cookies){
-		    if(cookie.getName().equals("kkas_handlekurv")){
+		for(Cookie cookie : cookies) {
+			
+		    if (cookie.getName().equals("kkas_handlekurv")) {
 		        handlekurv = cookie.getValue();
 		    }
 		}
 		
 		String[] handleListe = handlekurv.split(",");
 		
-		HashMap<String, Integer> oversikt = new HashMap<String, Integer>();
+		ProductDAO pDAO = new ProductDAO(LanguageSettings.getLocale(request, response).getLanguage());
+		Description gjeldende = null;
+		ArrayList<HashMap<String,String>> tilJsp = new ArrayList<HashMap<String,String>>();
+		HashMap<String, String> produktDetaljer = null;
 		
-		if (handleListe.length!=0) {
+		int i = 0;
+		String gjeldendeId = "";
+		
+		for (String produktId : handleListe) {
 			
-			//Går gjennom handlekurven
-			for (String produktId : handleListe) {
-				
-				if (oversikt.containsKey(Integer.parseInt(produktId)) ) {
-					
-					//Produktet finnes allerede i handlekurven. Øker med +1
-					oversikt.put(produktId, new Integer(oversikt.get(produktId))+1 );
-					System.out.println("Legger til " + produktId + " ant: " + oversikt.get(produktId)+1);
-				}
-				
-				else {
-					oversikt.put(produktId, new Integer(1));
-					System.out.println("Ny " + produktId + " ant: " + oversikt.get(produktId));
-				}
-				
-			}//for
+			produktDetaljer = new HashMap<String,String>();
+			System.out.println("Henter map med pno" + produktId);
+			gjeldende = pDAO.getMap().get(new Integer(produktId));
+			
+		
+			System.out.println("en verdi: " + gjeldende.getpName());
+			Integer pId = new Integer(produktId);
+			
+			String antall = "1";
+			
+			if (produktDetaljer.containsKey("navn")) {
+				antall = produktDetaljer.get(pId);
+				produktDetaljer.put("antall", Integer.toString(new Integer(antall+1)));
+			}
+			
+			else {
+				produktDetaljer.put("pno", Integer.toString(gjeldende.getPno()));
+				produktDetaljer.put("navn", gjeldende.getpName());
+				produktDetaljer.put("beskrivelse", gjeldende.getText());
+				produktDetaljer.put("pris", Double.toString(gjeldende.getPriceInEuro()));
+				produktDetaljer.put("antall", antall);
+			}
+			
+			if (i!=0 && gjeldendeId.equals(produktId)) {
+				tilJsp.add(produktDetaljer);
+			}
+			
+			gjeldendeId = produktId;
+			
+			i++;
 		}
 		
-		else {
-			response.getWriter().append("Tom handlevogn");
-		}
 		
-		//System.out.println(oversikt.toString());
+		String lang = LanguageSettings.getLocale(request, response).getLanguage();
+		
+		request.setAttribute("language", LanguageSettings.getLocale(request, response).getLanguage());
+		request.setAttribute("lang", lang);
+		request.setAttribute("produkter", tilJsp);
+		request.getRequestDispatcher("kurv.jsp").forward(request, response);
+		
 	}
 
 	
@@ -86,10 +115,8 @@ public class KurvServlet extends HttpServlet {
 		
 		Cookie cookie = new Cookie("kkas_handlekurv", handlekurv);
 		response.addCookie(cookie);
-		
-		doGet(request,response);
-		
-		//response.getWriter().append("Handlekurv: " + handlekurv);
+		response.sendRedirect("Kurv");
+
 	}
 
 }
